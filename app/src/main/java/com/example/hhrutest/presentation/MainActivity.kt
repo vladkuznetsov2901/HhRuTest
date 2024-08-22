@@ -1,26 +1,19 @@
-package com.example.hhrutest
+package com.example.hhrutest.presentation
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import com.example.hhrutest.R
 import com.example.hhrutest.databinding.ActivityMainBinding
-import com.example.hhrutest.ui.sign_in.SignInViewModel
-import kotlinx.coroutines.flow.collect
+import com.example.hhrutest.presentation.ui.sign_in.SignInViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -41,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             if (isSignIn) {
+                navController.navigate(R.id.navigation_search)
                 binding.navView.setOnItemSelectedListener {
 
                     when (it.itemId) {

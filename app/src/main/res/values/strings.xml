@@ -17,5 +17,12 @@
     <string name="now_watching_count_text">Сейчас просматривает </string>
     <string name="vacancy_title_text">UI/UX Designer</string>
     <string name="vacancy_city_text">Минск</string>
+    <string name="your_tasks_text">Ваши задачи</string>
+    <string name="you_can_ask_employer_text">Задайте вопрос работодателю</string>
+    <string name="he_will_receive_it_text">Он получит его с откликом на вакансию</string>
+    <string name="add_accompanying_text">Добавить сопроводительное</string>
+    <string name="respond_text">Откликнуться</string>
+    <string name="ui_ux_designer">UI/UX дизайнер</string>
+    <string name="resume_for_respond">Резюме для отклика</string>
 
 </resources>

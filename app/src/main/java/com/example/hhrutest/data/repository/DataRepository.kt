@@ -4,8 +4,9 @@ import android.util.Log
 import com.example.hhrutest.data.api.GetDataApi
 import com.example.hhrutest.data.entities.Offer
 import com.example.hhrutest.data.entities.Vacancy
+import javax.inject.Inject
 
-class DataRepository {
+class DataRepository @Inject constructor() {
 
     fun getOffers(): List<Offer> {
         return GetDataApi.retrofit.loadData().execute().body()?.offers ?: emptyList()

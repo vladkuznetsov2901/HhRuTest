@@ -1,30 +1,27 @@
-package com.example.hhrutest.ui.sign_in
+package com.example.hhrutest.presentation.ui.sign_in
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.hhrutest.R
 import com.example.hhrutest.databinding.FragmentEnterCodeBinding
-import com.example.hhrutest.databinding.FragmentSignInBinding
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class EnterCodeFragment : Fragment() {
 
     private var _binding: FragmentEnterCodeBinding? = null
     private val binding get() = _binding!!
 
-    val viewModel: SignInViewModel by viewModels()
+    @Inject
+    lateinit var signInViewModelFactory: SignInViewModelFactory
+
+    private val viewModel: SignInViewModel by viewModels { signInViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

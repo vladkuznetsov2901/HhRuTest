@@ -3,18 +3,20 @@ package com.example.hhrutest.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hhrutest.R
 import com.example.hhrutest.data.entities.Vacancy
 import com.example.hhrutest.databinding.VacancyCardItemBinding
+import com.example.hhrutest.presentation.ui.home.ResponseBottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-class VacancyAdapter : ListAdapter<Vacancy, VacancyAdapter.VacancyViewHolder>(DiffUtilCallback()) {
+class VacancyAdapter(private val fragmentManager: FragmentManager) :
+    ListAdapter<Vacancy, VacancyAdapter.VacancyViewHolder>(DiffUtilCallback()) {
 
     private var onItemClickListener: OnItemClickListener? = null
 
@@ -35,13 +37,20 @@ class VacancyAdapter : ListAdapter<Vacancy, VacancyAdapter.VacancyViewHolder>(Di
         with(holder.binding) {
             if (item.lookingNumber != 0) {
                 nowWatchingCountText.text =
-                    "${nowWatchingCountText.text} ${ item.lookingNumber} человек"
+                    "${nowWatchingCountText.text} ${item.lookingNumber} человек"
             } else nowWatchingCountText.visibility = View.GONE
             vacancyTitleText.text = item.title
+            if (item.salary.short != null) {
+                vacancySalaryText.text = item.salary.short
+            } else vacancySalaryText.visibility = View.GONE
             vacancyCityText.text = item.address.town
             vacancyCompanyText.text = item.company
             vacancyExperienceText.text = item.experience.previewText
             publishedDateText.text = formatPublishedDate(item.publishedDate)
+            vacancyButton.setOnClickListener {
+                val bottomSheetDialog = ResponseBottomSheetDialog()
+                bottomSheetDialog.show(fragmentManager, bottomSheetDialog.tag)
+            }
         }
 
         holder.itemView.setOnClickListener {
@@ -63,7 +72,7 @@ class VacancyAdapter : ListAdapter<Vacancy, VacancyAdapter.VacancyViewHolder>(Di
     }
 
     interface OnItemClickListener {
-        fun onItemClick(imgURL: String)
+        fun onItemClick(id: String)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {

@@ -1,4 +1,4 @@
-package com.example.hhrutest.ui.sign_in
+package com.example.hhrutest.presentation.ui.sign_in
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,18 +7,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.hhrutest.R
 import com.example.hhrutest.databinding.FragmentSignInBinding
+import com.example.hhrutest.presentation.ui.home.HomeViewModel
+import com.example.hhrutest.presentation.ui.home.HomeViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SignInFragment : Fragment() {
     private var _binding: FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
-    val viewModel: SignInViewModel by viewModels()
+    @Inject
+    lateinit var signInViewModelFactory: SignInViewModelFactory
+
+    private val viewModel: SignInViewModel by viewModels { signInViewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

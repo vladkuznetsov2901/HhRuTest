@@ -1,15 +1,15 @@
-package com.example.hhrutest.ui.sign_in
+package com.example.hhrutest.presentation.ui.sign_in
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.appcompat.widget.AppCompatButton
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class SignInViewModel : ViewModel() {
+
+class SignInViewModel @Inject constructor() : ViewModel() {
 
     private val _isSignIn = MutableStateFlow<Boolean>(false)
     val isSignIn: MutableStateFlow<Boolean> = _isSignIn
