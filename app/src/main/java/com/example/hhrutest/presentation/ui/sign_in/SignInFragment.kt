@@ -43,25 +43,38 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.editTextTextEmailAddress.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                if (viewModel.isEmailValid(s.toString())) {
-                    binding.buttonContinue.isEnabled = true
-                    binding.buttonContinue.isClickable = true
-                } else {
-                    binding.buttonContinue.isEnabled = false
-                    binding.buttonContinue.isClickable = false
-                }
+                if (s.toString().length > 0) binding.clearTextButton.visibility = View.VISIBLE
+                else binding.clearTextButton.visibility = View.GONE
             }
         })
 
+        binding.clearTextButton.setOnClickListener {
+            binding.editTextTextEmailAddress.text?.clear()
+            binding.clearTextButton.visibility = View.GONE
+        }
+
+
         binding.buttonContinue.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString(EMAIL_KEY, binding.editTextTextEmailAddress.text.toString())
-            findNavController().navigate(R.id.action_signInFragment_to_enterCodeFragment, bundle)
+            if (viewModel.isValidEmail(binding.editTextTextEmailAddress.text.toString())) {
+                binding.warning.visibility = View.GONE
+                val bundle = Bundle()
+                bundle.putString(EMAIL_KEY, binding.editTextTextEmailAddress.text.toString())
+                findNavController().navigate(
+                    R.id.action_signInFragment_to_enterCodeFragment,
+                    bundle
+                )
+            } else {
+                binding.warning.visibility = View.VISIBLE
+            }
+
         }
 
 

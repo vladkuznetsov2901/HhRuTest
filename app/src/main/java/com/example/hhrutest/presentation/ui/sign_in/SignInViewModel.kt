@@ -18,9 +18,16 @@ class SignInViewModel @Inject constructor() : ViewModel() {
         MutableStateFlow<MutableList<Boolean>>(emptyList<Boolean>().toMutableList())
     val isEditTextNotEmpty = _isEditTextNotEmpty
 
-    fun isEmailValid(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    fun isValidEmail(email: String): Boolean {
+        // Определение регулярного выражения для проверки email
+        val emailRegex = Regex(
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
+                    "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"
+        )
+
+        return email.isNotEmpty() && email.matches(emailRegex)
     }
+
 
     fun requestFocusOnEditText(
         currentEditText: EditText,

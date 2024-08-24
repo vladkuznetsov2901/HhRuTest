@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.hhrutest.R
 import com.example.hhrutest.adapters.QuestionsAdapter
 import com.example.hhrutest.databinding.FragmentVacancyPageBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +49,8 @@ class VacancyPageFragment : Fragment() {
 
         val questionsAdapter = QuestionsAdapter(emptyList())
 
+        var isInDB = false
+
         binding.recyclerQuestions.layoutManager = GridLayoutManager(context, 1)
 
         binding.recyclerQuestions.adapter = questionsAdapter
@@ -85,6 +88,10 @@ class VacancyPageFragment : Fragment() {
                     binding.companyAdress.text =
                         "${selectedVacancy.address.town}, ${selectedVacancy.address.street}, ${selectedVacancy.address.house}"
                     questionsAdapter.updateQuestions(selectedVacancy.questions)
+                    if (selectedVacancy.isFavorite) binding.favoriteButton.setImageResource(R.drawable.favorites_true_ic)
+                    else binding.favoriteButton.setImageResource(R.drawable.favorites_ic)
+                    if (viewModel.isVacancyInDB(currentObjectId!!)) binding.favoriteButton.setImageResource(R.drawable.favorites_true_ic)
+                    else binding.favoriteButton.setImageResource(R.drawable.favorites_ic)
                 }
             }
         }
@@ -98,6 +105,15 @@ class VacancyPageFragment : Fragment() {
         binding.vacancyButton.setOnClickListener {
             val bottomSheetDialog = ResponseBottomSheetDialog()
             bottomSheetDialog.show(parentFragmentManager, bottomSheetDialog.tag)
+        }
+
+        binding.favoriteButton.setOnClickListener {
+            isInDB = !isInDB
+            if (currentObjectId != null) {
+                viewModel.insertOrDeleteVacanceDB(currentObjectId)
+                if (isInDB) binding.favoriteButton.setImageResource(R.drawable.favorites_true_ic)
+                else binding.favoriteButton.setImageResource(R.drawable.favorites_ic)
+            }
         }
 
         binding.backButton.setOnClickListener {

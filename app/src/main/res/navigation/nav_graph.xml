@@ -20,9 +20,9 @@
 
     <fragment
         android:id="@+id/navigation_favourites"
-        android:name="com.example.hhrutest.presentation.ui.dashboard.DashboardFragment"
+        android:name="com.example.hhrutest.presentation.ui.dashboard.FavoritesFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/navigation_responses"
@@ -36,7 +36,9 @@
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_signInFragment_to_enterCodeFragment"
-            app:destination="@id/enterCodeFragment" />
+            app:destination="@id/enterCodeFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
 
     <fragment

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout2"
+    app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_width="152dp"
+    android:layout_height="140dp"
+    android:layout_marginStart="8dp"
+    android:background="#222325"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/avatar2" />
+
+    <TextView
+        android:id="@+id/up_resume_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatar"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/sf_pro_display_semibold"
+        android:text="Поднять резюме в поиске"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/raise_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Поднять"
+        android:textColor="#4CB24E"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/up_resume_text" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+

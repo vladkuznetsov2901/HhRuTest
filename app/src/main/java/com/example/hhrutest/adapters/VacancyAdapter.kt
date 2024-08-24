@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hhrutest.R
 import com.example.hhrutest.data.entities.Vacancy
 import com.example.hhrutest.databinding.VacancyCardItemBinding
 import com.example.hhrutest.presentation.ui.home.ResponseBottomSheetDialog
@@ -19,8 +20,7 @@ class VacancyAdapter(private val fragmentManager: FragmentManager) :
     ListAdapter<Vacancy, VacancyAdapter.VacancyViewHolder>(DiffUtilCallback()) {
 
     private var onItemClickListener: OnItemClickListener? = null
-
-
+    private var onFavoriteBtnClick: OnFavoriteButtonClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VacancyViewHolder {
         return VacancyViewHolder(
             VacancyCardItemBinding.inflate(
@@ -51,11 +51,18 @@ class VacancyAdapter(private val fragmentManager: FragmentManager) :
                 val bottomSheetDialog = ResponseBottomSheetDialog()
                 bottomSheetDialog.show(fragmentManager, bottomSheetDialog.tag)
             }
+            setIconToImageButton(item.isFavorite, holder.binding)
         }
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.onItemClick(item.id)
         }
+
+        holder.binding.favoriteButton.setOnClickListener {
+            onFavoriteBtnClick?.onFavoriteBtnClick(item.id)
+            setIconToImageButton(item.isFavorite, holder.binding)
+        }
+
 
 
     }
@@ -75,8 +82,26 @@ class VacancyAdapter(private val fragmentManager: FragmentManager) :
         fun onItemClick(id: String)
     }
 
+    interface OnFavoriteButtonClickListener {
+        fun onFavoriteBtnClick(id: String)
+    }
+
     fun setOnItemClickListener(listener: OnItemClickListener) {
         onItemClickListener = listener
+    }
+
+    fun setOnFavoriteButtonClickListener(listener: OnFavoriteButtonClickListener) {
+        onFavoriteBtnClick = listener
+    }
+
+    fun setIconToImageButton(isInDb: Boolean, binding: VacancyCardItemBinding) {
+        if (isInDb) {
+            binding.favoriteButton.setImageResource(
+                R.drawable.favorites_true_ic
+            )
+        } else binding.favoriteButton.setImageResource(
+            R.drawable.favorites_ic
+        )
     }
 
     class VacancyViewHolder(val binding: VacancyCardItemBinding) :

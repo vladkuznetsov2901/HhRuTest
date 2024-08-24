@@ -70,6 +70,12 @@ class AllVacanciesFragment : Fragment() {
             }
         })
 
+        vacancyAdapter.setOnFavoriteButtonClickListener(object :
+            VacancyAdapter.OnFavoriteButtonClickListener {
+            override fun onFavoriteBtnClick(id: String) {
+                viewModel.insertOrDeleteVacanceDB(id)
+            }
+        })
 
         binding.backButton.setOnClickListener {
             findNavController().popBackStack()

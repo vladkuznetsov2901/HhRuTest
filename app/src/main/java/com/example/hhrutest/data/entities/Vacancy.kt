@@ -7,7 +7,7 @@ data class Vacancy(
     val description: String,
     val experience: Experience,
     val id: String,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     val lookingNumber: Int,
     val publishedDate: String,
     val questions: List<String>,
@@ -16,3 +16,4 @@ data class Vacancy(
     val schedules: List<String>,
     val title: String
 )
+

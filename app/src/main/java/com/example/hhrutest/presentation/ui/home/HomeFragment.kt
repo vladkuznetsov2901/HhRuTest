@@ -1,5 +1,7 @@
 package com.example.hhrutest.presentation.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hhrutest.R
+import com.example.hhrutest.adapters.OffersAdapter
 import com.example.hhrutest.adapters.VacancyAdapter
 import com.example.hhrutest.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,10 +46,29 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val vacancyAdapter = VacancyAdapter(parentFragmentManager)
+        val offersAdapter = OffersAdapter()
         binding.buttonAllVacancies.visibility = View.INVISIBLE
         binding.vacanciesRecycler.layoutManager = GridLayoutManager(context, 1)
+        binding.offersRecycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         binding.vacanciesRecycler.adapter = vacancyAdapter
+        binding.offersRecycler.adapter = offersAdapter
+
+        lifecycleScope.launch {
+            viewModel.getOffers()
+            viewModel.offersInfo.collect { offers ->
+                offersAdapter.submitList(offers)
+            }
+        }
+
+        offersAdapter.setOnItemClickListener(object : OffersAdapter.OnItemClickListener {
+            override fun onItemClick(link: String) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                startActivity(intent)
+            }
+        })
+
         lifecycleScope.launch {
             viewModel.getVacancies()
             viewModel.vacanciesInfo.collect { vacancy ->
@@ -65,6 +88,15 @@ class HomeFragment : Fragment() {
                     R.id.action_navigation_search_to_vacancyPageFragment,
                     bundle
                 )
+            }
+        })
+
+        vacancyAdapter.setOnFavoriteButtonClickListener(object :
+            VacancyAdapter.OnFavoriteButtonClickListener {
+            override fun onFavoriteBtnClick(id: String) {
+                vacancyAdapter.currentList.find { it.id == id }!!.isFavorite =
+                    !vacancyAdapter.currentList.find { it.id == id }!!.isFavorite
+                viewModel.insertOrDeleteVacanceDB(id)
             }
         })
 

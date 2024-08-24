@@ -1,10 +1,12 @@
 package com.example.hhrutest.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hhrutest.R
@@ -17,6 +19,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+
     val viewModel: SignInViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_activity_main) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         val sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val isSignIn = sharedPref.getBoolean("isSignIn", false)
@@ -66,5 +70,14 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        if (navController.currentDestination?.id == R.id.navigation_search) {
+            finishAffinity()
+        } else {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 }

@@ -52,8 +52,10 @@
 
             android:hint="@string/email_or_phone"
             android:inputType="textEmailAddress"
+            android:paddingStart="32dp"
             android:textColor="@color/white"
             android:textColorHint="#5B5B5D"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/search_work_text" />
 
@@ -62,10 +64,8 @@
             android:layout_width="167dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:background="#2B7EFE"
-            android:enabled="false"
-            android:clickable="false"
             android:text="@string/continue_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
@@ -74,13 +74,49 @@
             android:id="@+id/button_sign_in_w_phone"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/sign_in_w_password"
             android:textColor="#2B7EFE"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/button_continue"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/warning_text"
+            android:visibility="gone"
+            android:textColor="@android:color/holo_red_light"
+            app:layout_constraintBottom_toTopOf="@+id/button_continue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="9dp"
+            android:src="@drawable/respones_ic"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextEmailAddress" />
+
+        <ImageButton
+            android:id="@+id/clear_text_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/clear_text_ic"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextEmailAddress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

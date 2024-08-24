@@ -24,5 +24,7 @@
     <string name="respond_text">Откликнуться</string>
     <string name="ui_ux_designer">UI/UX дизайнер</string>
     <string name="resume_for_respond">Резюме для отклика</string>
+    <string name="warning_text">Вы ввели неверный email.</string>
+    <string name="enter_the_code_text">Напишите его, чтобы подтвердить, что это вы, а не кто-то другой входит в личный кабинет</string>
 
 </resources>
