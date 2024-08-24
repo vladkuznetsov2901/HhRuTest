@@ -97,7 +97,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    suspend fun updateBubbleCount() {
-        _vacanciesCount.value = getAllFavoriteVacancies.getAllFavoriteVacancies().size
+    fun updateBubbleCount() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _vacanciesCount.value = getAllFavoriteVacancies.getAllFavoriteVacancies().size
+        }
     }
 }

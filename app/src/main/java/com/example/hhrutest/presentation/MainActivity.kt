@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             if (isSignIn) {
-                homeViewModel.updateBubbleCount()
                 navController.navigate(R.id.navigation_search)
                 binding.navView.setOnItemSelectedListener {
+                    homeViewModel.updateBubbleCount()
                     when (it.itemId) {
                         R.id.navigation_search -> {
                             findNavController(R.id.nav_host_activity_main).navigate(R.id.navigation_search)
