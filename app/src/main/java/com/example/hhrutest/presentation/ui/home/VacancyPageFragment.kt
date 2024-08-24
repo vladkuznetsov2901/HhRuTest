@@ -113,6 +113,9 @@ class VacancyPageFragment : Fragment() {
                 viewModel.insertOrDeleteVacanceDB(currentObjectId)
                 if (isInDB) binding.favoriteButton.setImageResource(R.drawable.favorites_true_ic)
                 else binding.favoriteButton.setImageResource(R.drawable.favorites_ic)
+                lifecycleScope.launch {
+                    viewModel.updateBubbleCount()
+                }
             }
         }
 

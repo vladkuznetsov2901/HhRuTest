@@ -14,8 +14,10 @@ import com.example.hhrutest.domain.GetVacanciesUseCase
 import com.example.hhrutest.domain.InsertVacancyInDBUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
@@ -31,6 +33,15 @@ class HomeViewModel @Inject constructor(
 
     private val _offersInfo = MutableStateFlow<List<Offer>>(emptyList())
     val offersInfo = _offersInfo.asStateFlow()
+
+    private val _vacanciesCount = MutableStateFlow<Int>(0)
+    val vacanciesCount: StateFlow<Int> get() = _vacanciesCount
+
+    init {
+        viewModelScope.launch {
+            updateBubbleCount()
+        }
+    }
 
     suspend fun getVacancies() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -65,6 +76,9 @@ class HomeViewModel @Inject constructor(
                     vacancyDB
                 )
             }
+            withContext(Dispatchers.Main) {
+                updateBubbleCount()
+            }
         }
     }
 
@@ -88,5 +102,9 @@ class HomeViewModel @Inject constructor(
             2, 3, 4 -> " вакансии"
             else -> " вакансий"
         }
+    }
+
+    suspend fun updateBubbleCount() {
+        _vacanciesCount.value = getAllFavoriteVacancies.getAllFavoriteVacancies().size
     }
 }

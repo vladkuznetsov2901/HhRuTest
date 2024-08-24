@@ -97,6 +97,9 @@ class HomeFragment : Fragment() {
                 vacancyAdapter.currentList.find { it.id == id }!!.isFavorite =
                     !vacancyAdapter.currentList.find { it.id == id }!!.isFavorite
                 viewModel.insertOrDeleteVacanceDB(id)
+                lifecycleScope.launch {
+                    viewModel.updateBubbleCount()
+                }
             }
         })
 

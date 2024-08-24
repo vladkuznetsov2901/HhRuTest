@@ -74,6 +74,9 @@ class AllVacanciesFragment : Fragment() {
             VacancyAdapter.OnFavoriteButtonClickListener {
             override fun onFavoriteBtnClick(id: String) {
                 viewModel.insertOrDeleteVacanceDB(id)
+                lifecycleScope.launch {
+                    viewModel.updateBubbleCount()
+                }
             }
         })
 
