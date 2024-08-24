@@ -45,13 +45,14 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         val isSignIn = sharedPref.getBoolean("isSignIn", false)
 
+        val badge = binding.navView.getOrCreateBadge(R.id.navigation_favourites)
 
 
         lifecycleScope.launch {
             if (isSignIn) {
+                homeViewModel.updateBubbleCount()
                 navController.navigate(R.id.navigation_search)
                 binding.navView.setOnItemSelectedListener {
-
                     when (it.itemId) {
                         R.id.navigation_search -> {
                             findNavController(R.id.nav_host_activity_main).navigate(R.id.navigation_search)
@@ -71,7 +72,16 @@ class MainActivity : AppCompatActivity() {
                         else -> false
                     }
                 }
-
+                lifecycleScope.launch {
+                    homeViewModel.vacanciesCount.collect { count ->
+                        if (count > 0) {
+                            badge.number = count
+                            badge.isVisible = true
+                        } else {
+                            badge.isVisible = false
+                        }
+                    }
+                }
             } else {
                 val editor = sharedPref.edit()
                 editor.putBoolean("isSignIn", true)
@@ -80,18 +90,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val badge = binding.navView.getOrCreateBadge(R.id.navigation_favourites)
 
-        lifecycleScope.launch {
-            homeViewModel.vacanciesCount.collect { count ->
-                if (count > 0) {
-                    badge.number = count
-                    badge.isVisible = true
-                } else {
-                    badge.isVisible = false
-                }
-            }
-        }
+
 
 
     }

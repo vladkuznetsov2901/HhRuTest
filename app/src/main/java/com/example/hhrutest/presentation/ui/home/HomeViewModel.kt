@@ -70,24 +70,17 @@ class HomeViewModel @Inject constructor(
             val vacancyDB = FavoritesVacanciesDB(vacancyID)
             if (isVacancyInDB(vacancyID)) {
                 deleteVacancyUseCase.deleteVacancyFromDB(vacancyDB)
-
             } else {
                 insertVacancyInDBUseCase.insertVacancyInDB(
                     vacancyDB
                 )
             }
-            withContext(Dispatchers.Main) {
-                updateBubbleCount()
-            }
+            updateBubbleCount()
         }
     }
 
     suspend fun isVacancyInDB(vacancyID: String): Boolean {
-        val vacancyDB = FavoritesVacanciesDB(id = vacancyID)
-        val favoriteVacanciesResult = getAllFavoriteVacancies.getAllFavoriteVacancies()
-        return if (vacancyDB in favoriteVacanciesResult) {
-            true
-        } else false
+        return getAllFavoriteVacancies.getAllFavoriteVacancies().any { it.id == vacancyID }
     }
 
     fun deleteVacancyFromFavoritesDB(id: String) {
